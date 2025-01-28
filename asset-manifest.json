@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/inheritance/static/css/main.f855e6bc.css",
+    "main.js": "/inheritance/static/js/main.271e2c04.js",
+    "static/media/logo.svg": "/inheritance/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/inheritance/index.html",
+    "main.f855e6bc.css.map": "/inheritance/static/css/main.f855e6bc.css.map",
+    "main.271e2c04.js.map": "/inheritance/static/js/main.271e2c04.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.271e2c04.js"
+  ]
+}
