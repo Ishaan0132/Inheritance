@@ -57,7 +57,7 @@ This video demonstrates how Wazuh is used for real-time security monitoring and 
 
 #### Chatbot for User Assistance:
 
-<video controls src="Demo Videos and Screenshots\ChatBot.mp4" title="Chatbot Demo"></video>
+![Chatbot Demo](Demo%20Videos%20and%20Screenshots/ChatBot.gif)
 
 ---
 
