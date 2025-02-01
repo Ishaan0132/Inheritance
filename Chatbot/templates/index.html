@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSecurity Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>CyberSecurity Chatbot</h1>
+
+        <div id="chat-container">
+            <div id="chat-log"></div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById("chat-container");
+        const chatLog = document.getElementById("chat-log");
+        const messageInput = document.getElementById("message-input");
+
+        function displayMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ' + (message.startsWith('You:') ? 'user-message' : 'bot-message');
+            let formattedMessage = message.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+            formattedMessage = formattedMessage.replace(/\*(.+?)\*/g, '<i>$1</i>'); 
+
+            messageDiv.innerHTML = formattedMessage;
+            chatLog.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message !== "") {
+                displayMessage(message);
+
+                fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'message=' + encodeURIComponent(message),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.bot_response) {
+                            displayMessage(data.bot_response);
+                        } else if (data.error) {
+                            displayMessage("Error: " + data.error);
+                        }
+                    })
+                    .catch(error => {
+                        displayMessage("Error: Could not connect to the server.");
+                        console.error("Fetch error:", error);
+                    });
+
+                messageInput.value = "";
+            }
+        }
+
+        messageInput.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
